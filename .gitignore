@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Data & models (prevent large commits)
+mlbb_mvp/data/*.csv
+mlbb_mvp/models/*.joblib
+
+# OS/IDE
+.DS_Store
+.idea/
+.vscode/
