@@ -1,15 +1,36 @@
+cat > .gitignore <<'EOF'
+# ======================
 # Python
+# ======================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+dist/
+build/
 .venv/
 venv/
 .env
 
-# Data & models (prevent large commits)
+# ======================
+# Data & models (keep repo lightweight)
+# ======================
 mlbb_mvp/data/*.csv
 mlbb_mvp/models/*.joblib
 
-# OS/IDE
+# ======================
+# macOS junk
+# ======================
 .DS_Store
+
+# ======================
+# IDE / Editor files
+# ======================
 .idea/
 .vscode/
+*.swp
+*.swo
+EOF
