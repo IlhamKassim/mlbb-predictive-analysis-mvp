@@ -33,4 +33,3 @@ mlbb_mvp/models/*.joblib
 .vscode/
 *.swp
 *.swo
-EOF
