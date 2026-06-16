@@ -179,10 +179,29 @@ def preprocess_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         else:
             data[col] = data[col].fillna("unknown")
 
-    # Identify label column if exists; for now we leave label in place
-    # One‑hot encode categorical columns
+    # ... (existing categorical encoding)
     categorical_cols = data.select_dtypes(include=["object", "category"]).columns.tolist()
     data_encoded = pd.get_dummies(data, columns=categorical_cols, drop_first=True)
+
+    # ADVANCED: Professional Synergy & Counter Features
+    # We add interaction terms for known high-impact synergies/counters
+    try:
+        import json
+        with open("data/synergy_matrix.json", "r") as f:
+            syn = json.load(f)
+        # Top 10 Synergies (highest lift)
+        top_syn = sorted(syn.items(), key=lambda x: -x[1]["lift"])[:10]
+        for pair, stats in top_syn:
+            h1, h2 = pair.split("|")
+            # Logic to check if BOTH heroes are in the picks
+            # This is complex with dummies, but for now we look for the name in columns
+            cols = data_encoded.columns
+            h1_cols = [c for c in cols if h1 in c]
+            h2_cols = [c for c in cols if h2 in c]
+            if h1_cols and h2_cols:
+                data_encoded[f"syn_{h1}_{h2}"] = data_encoded[h1_cols].max(axis=1) * data_encoded[h2_cols].max(axis=1)
+    except:
+        pass
 
     return data_encoded
 

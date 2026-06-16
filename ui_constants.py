@@ -17,6 +17,16 @@ ROLE_ATTRIBUTES = {
     "Support": {"Damage": 2, "Durability": 2, "Control": 3, "Mobility": 3, "Utility": 5},
 }
 
+# General heuristic mapping from Class to Primary Lane
+CLASS_TO_LANE = {
+    "Marksman": "Gold Lane",
+    "Tank": "Roam",
+    "Fighter": "EXP Lane",
+    "Mage": "Mid Lane",
+    "Assassin": "Jungle",
+    "Support": "Roam"
+}
+
 DEFAULT_ATTRS = {"Damage": 1, "Durability": 1, "Control": 1, "Mobility": 1, "Utility": 1}
 
 CSS_STYLE = """

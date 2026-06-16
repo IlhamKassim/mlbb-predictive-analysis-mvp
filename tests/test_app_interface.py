@@ -26,9 +26,10 @@ def test_map_user_input_to_features_consistency():
     
     # WHEN: User selects fanny and rafaela
     team_heroes = ["fanny", "rafaela"]
+    enemy_heroes = []
     banned_heroes = []
     
-    input_row = map_user_input_to_features(clf, feature_names, team_heroes, banned_heroes)
+    input_row = map_user_input_to_features(clf, feature_names, team_heroes, enemy_heroes, banned_heroes)
     
     # THEN: The columns matching 'fanny' and 'rafaela' should be 1, others 0
     assert input_row.at[0, "hero_pick1_fanny"] == 1
@@ -54,7 +55,7 @@ def test_map_user_input_to_features_substring_edge_case():
     
     # WHEN: User selects 'ling'
     team_heroes = ["ling"]
-    input_row = map_user_input_to_features(clf, feature_names, team_heroes, [])
+    input_row = map_user_input_to_features(clf, feature_names, team_heroes, [], [])
     
     # THEN: Only 'hero_pick1_ling' should be 1
     assert input_row.at[0, "hero_pick1_ling"] == 1
