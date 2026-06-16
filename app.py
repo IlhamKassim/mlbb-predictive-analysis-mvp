@@ -253,7 +253,7 @@ def main():
 
             st.subheader("🕸️ Draft Comparison")
             fig = create_radar_chart(team_heroes, enemy_heroes, hero_meta)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key="radar_intel")
 
             if enemy_heroes:
                 st.divider()
@@ -279,7 +279,7 @@ def main():
             if sim_hero:
                 sim_team = team_heroes + [sim_hero]
                 fig_sim = create_radar_chart(sim_team, enemy_heroes, hero_meta)
-                st.plotly_chart(fig_sim, use_container_width=True)
+                st.plotly_chart(fig_sim, use_container_width=True, key="radar_sim")
 
         with tab_stats:
             if win_rates:
