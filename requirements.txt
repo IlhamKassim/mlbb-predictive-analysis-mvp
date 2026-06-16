@@ -3,3 +3,6 @@ numpy
 scikit-learn
 joblib
 streamlit
+requests
+plotly
+xgboost
