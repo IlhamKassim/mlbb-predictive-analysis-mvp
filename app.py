@@ -283,9 +283,9 @@ def main():
 
         with tab_stats:
             if win_rates:
-                st.subheader("📈 Global performance")
-                wr_df = pd.DataFrame(sorted(win_rates.items(), key=lambda x: -x[1]), columns=["Hero", "Win Rate"])
-                wr_df["Win Rate"] = wr_df["Win Rate"].map(lambda x: f"{x:.2%}")
+                st.subheader("📈 Pro Tournament Meta (14k+ Matches)")
+                wr_df = pd.DataFrame(sorted(win_rates.items(), key=lambda x: -x[1]), columns=["Hero", "Pro Win Rate"])
+                wr_df["Pro Win Rate"] = wr_df["Pro Win Rate"].map(lambda x: f"{x:.2%}")
                 st.dataframe(wr_df, use_container_width=True, height=600)
 
 if __name__ == "__main__":
