@@ -212,3 +212,34 @@ def save_models(
     for target, model in regressors.items():
         filename = f"regressor_{target}.joblib"
         joblib.dump(model, os.path.join(directory, filename))
+
+if __name__ == "__main__":
+    from data_preprocessing import load_dataset, preprocess_dataframe, split_features_labels
+    
+    DATA_PATH = "data/mlbb_data.csv"
+    if not os.path.exists(DATA_PATH):
+        print(f"Error: Data file {DATA_PATH} not found.")
+    else:
+        print(f"Loading and preprocessing data from {DATA_PATH}...")
+        df_raw = load_dataset(DATA_PATH)
+        df_processed = preprocess_dataframe(df_raw)
+        
+        X, y = split_features_labels(df_processed, label_column="win")
+        
+        print("Training classification model...")
+        clf = train_classification_model(X, y)
+        acc = evaluate_classifier(clf, X, y)
+        print(f"Classifier Accuracy: {acc:.4f}")
+        
+        print("Training regression models...")
+        # We need the original df for target values, aligned with X
+        # Since preprocess_dataframe might drop rows or change order, 
+        # but our current implementation keeps them aligned.
+        regressors = train_regression_models(X, df_raw)
+        mae_scores = evaluate_regressors(regressors, X, df_raw)
+        for target, mae in mae_scores.items():
+            print(f"Regressor {target} MAE: {mae:.4f}")
+            
+        print("Saving models to 'models/' directory...")
+        save_models(clf, regressors, "models")
+        print("Model retraining complete!")

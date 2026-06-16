@@ -18,8 +18,12 @@ venv/
 # ======================
 # Data & models (keep repo lightweight)
 # ======================
-mlbb_mvp/data/*.csv
-mlbb_mvp/models/*.joblib
+data/*.csv
+data/mlbb_data_backup.csv
+data/mlbb_data_expanded.csv
+external_data.csv
+models/*.joblib
+!data/sample.csv
 
 # ======================
 # macOS junk

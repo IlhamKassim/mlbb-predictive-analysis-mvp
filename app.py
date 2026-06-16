@@ -89,11 +89,8 @@ def map_user_input_to_features(
     """Create a single‑row DataFrame matching the classifier's input format.
 
     This function initializes all features to zero and then sets to 1
-    those dummy variables whose names contain one of the heroes selected by the
-    user.  It is a simple heuristic that relies on the naming
-    convention produced by ``pd.get_dummies`` in the preprocessing step.  If
-    your dataset uses different prefixes (e.g. ``pick1_fanny`` vs
-    ``hero_fanny``) you may need to adjust the matching logic.
+    those dummy variables whose names exactly match one of the heroes 
+    selected by the user (using a word-boundary-aware check).
 
     Parameters
     ----------
@@ -115,11 +112,14 @@ def map_user_input_to_features(
     """
     # Initialize row with zeros
     row = pd.DataFrame([np.zeros(len(feature_names))], columns=feature_names)
-    # For each feature, set to 1 if its name contains a hero in picks or bans
+    selected_heroes = set(team_heroes + banned_heroes)
+    
+    # For each feature, set to 1 if one of its components exactly matches a selected hero
     for col in feature_names:
-        for hero in team_heroes + banned_heroes:
-            if hero in col:
-                row.at[0, col] = 1
+        # Split by underscores (common for get_dummies) and check for exact match
+        parts = col.split("_")
+        if any(hero in parts for hero in selected_heroes):
+            row.at[0, col] = 1
     return row
 
 
